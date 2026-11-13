@@ -104,3 +104,34 @@ def test_profile_pairs_with_its_candidate_when_another_is_missing(tmp_path, monk
     missing = [r for r in rows if r["gate_notes"] == "profile_missing"]
     assert [r["full_name"] for r in missing] == [discover._row(leads[1], "x")["name"]]
     assert {r["full_name"] for r in rows if r not in missing} == {f"P{n}" for n in range(len(urls)) if n != 1}
+
+
+def test_over_range_candidate_is_capped_at_possible_fit(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    _fakes(monkeypatch, {"treg": 0, "jev": 0})
+    spec = json.loads(json.dumps(SPEC)); spec["hard"]["max_total_years"] = 5  # every fixture profile is over range
+    monkeypatch.setattr(criteria, "jd_to_spec", lambda text: spec)
+    out = pipeline.run(FX / "jd_oracle.md", budget_usd=10, from_stage=1, source="harvest", yes=True)
+    rows = [r for r in csv.DictReader(open(out)) if r["gate_notes"] != "profile_missing"]
+    assert rows and all(r["tier"] == "Possible Fit" and "over_range" in r["gate_notes"] for r in rows)
+
+
+def test_getleads_count_in_estimate_and_as_source(tmp_path, monkeypatch, capsys):
+    from jd2candidates import getleads
+    monkeypatch.chdir(tmp_path)
+    c = {"treg": 0, "jev": 0}
+    _fakes(monkeypatch, c)
+    monkeypatch.setenv("GETLEADS_API_KEY", "glb_live_x")
+    calls = []
+    def post(url, body, headers):
+        calls.append(url)
+        if url.endswith("/count"):
+            return {"ok": True, "total_matching": 1261}
+        return {"ok": True, "has_more": False, "contacts": [
+            {"full_name": "Asha K", "linkedin_url": "https://www.linkedin.com/in/asha-k", "current_title": "Technical Lead", "contact_location": "Pune"}]}
+    monkeypatch.setattr(pipeline, "_gl_post", post)
+    out = pipeline.run(FX / "jd_oracle.md", budget_usd=10, from_stage=1, source="getleads", yes=True)
+    assert "GetLeads pool: 1261 (1261 credits to pull)" in capsys.readouterr().out
+    rows = list(csv.DictReader(open(out)))
+    assert len(rows) == 1 and rows[0]["source"] == "getleads" and rows[0]["full_name"] == "Asha K"
+    assert not any(u.endswith("leads.search") for u in calls) and c["treg"] == 1  # one profile fetch, no lead search

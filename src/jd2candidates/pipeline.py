@@ -5,12 +5,13 @@ from concurrent.futures import ThreadPoolExecutor
 from datetime import date
 from pathlib import Path
 
-from . import criteria, discover, env, export, gate, notes, profile, tier, treg, typesafe
+from . import criteria, discover, env, export, gate, getleads, notes, profile, tier, treg, typesafe
 from .budget import Budget
 from .cache import RunDir
 
 _call = treg.call
 _post = typesafe.urllib_post
+_gl_post = getleads.urllib_post
 _ask = notes.ask
 PAGE_USD, PROFILE_USD, ROWS_PER_PAGE, UNIQUE_RATE = 0.05, 0.0032, 25, 0.6  # as billed by treg on 2026-11-13 (catalog lists double)
 
@@ -57,6 +58,8 @@ def _row(cand: dict, prof: dict | None, g: dict | None, scores: dict | None, ver
     for d in spec["soft"]:
         r[d["id"]] = scores.get(d["id"], {}).get("score", "")
     r["tier"], r["_mean"] = verdict["tier"], verdict["mean"]
+    if g["total_years"]["result"] == "over_range" and r["tier"] == "Good Fit":
+        r["tier"] = "Possible Fit"  # senior beyond the JD's range: unlikely to move for this role, so never the headline list
     r["review_notes"] = ", ".join(verdict["review_notes"])
     names = {d["id"]: d["name"] for d in spec["soft"]}
     top = sorted(((v["score"], k) for k, v in scores.items()), reverse=True)[:2]
@@ -86,13 +89,20 @@ def run(jd_path: Path, budget_usd: float = 10.0, from_stage: int = 0, source: st
 
     cands = None if redo(2) else rd.read("candidates")
     if cands is None:
+        gl_key = os.environ.get("GETLEADS_API_KEY", "")
+        if source == "getleads" and not gl_key:
+            print("--source getleads needs GETLEADS_API_KEY in .env")
+            sys.exit(1)
         est = estimate(spec)
         msg = f"{_summary(spec)}\n\nPre-run estimate (upper bound, {len(discover.angles(spec))} search angles): {est:.2f} USD (budget {budget_usd:.2f})"
-        if est > budget_usd:
+        if gl_key:  # the count is free, so show the GetLeads pool whichever source runs
+            n = getleads.count(spec, gl_key, post=_gl_post)
+            msg += f"\nGetLeads pool: {n} ({n} credits to pull)"
+        if source == "harvest" and est > budget_usd:
             print(msg + "\nEstimate exceeds budget; lower max_pages in the spec or raise --budget.")
             sys.exit(1)
         _confirm(msg, yes)
-        d = discover.discover(spec, budget, call=_call)
+        d = getleads.search(spec, gl_key, post=_gl_post) if source == "getleads" else discover.discover(spec, budget, call=_call)
         cost["discover"] = d["charged_usd"]
         stopped = d.get("stopped")
         cands = d["candidates"]
