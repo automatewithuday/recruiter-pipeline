@@ -81,3 +81,26 @@ def test_from_stage_recomputes_that_stage_onward(tmp_path, monkeypatch):
     c["treg"] = 0; c["jev"] = 0
     pipeline.run(FX / "jd_oracle.md", budget_usd=10, from_stage=3, source="harvest", yes=True)
     assert (c["treg"], c["jev"]) == (23, 22) and c["ask"] > 0  # profiles refetched, rescored, notes rewritten; discover stays cached
+
+
+def test_profile_pairs_with_its_candidate_when_another_is_missing(tmp_path, monkeypatch):
+    from jd2candidates import discover
+    monkeypatch.chdir(tmp_path)
+    _fakes(monkeypatch, {"treg": 0, "jev": 0})
+    leads = [e for e in LEADS["elements"] if e.get("linkedinUrl")]
+    urls = [e["linkedinUrl"] for e in leads]
+    miss = urls[1]  # a miss in the middle, with HarvestAPI canonicalising every other URL
+    def call(tool, params):
+        if tool.endswith("leads.search"):
+            return (LEADS if params["page"] == "1" else {"elements": []}), 0.10
+        if params["url"] == miss:
+            return MISS, 0.0064
+        raw = json.loads(json.dumps(RAW)); n = urls.index(params["url"])
+        raw["element"].update(firstName=f"P{n}", lastName="", linkedinUrl=f"https://www.linkedin.com/in/canon-{n}")
+        return raw, 0.0064
+    monkeypatch.setattr(pipeline, "_call", call)
+    out = pipeline.run(FX / "jd_oracle.md", budget_usd=10, from_stage=1, source="harvest", yes=True)
+    rows = list(csv.DictReader(open(out)))
+    missing = [r for r in rows if r["gate_notes"] == "profile_missing"]
+    assert [r["full_name"] for r in missing] == [discover._row(leads[1])["name"]]
+    assert {r["full_name"] for r in rows if r not in missing} == {f"P{n}" for n in range(len(urls)) if n != 1}

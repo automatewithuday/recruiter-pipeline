@@ -107,10 +107,10 @@ def run(jd_path: Path, budget_usd: float = 10.0, from_stage: int = 0, source: st
         profs = {"profiles": p["profiles"], "missing": p["missing"]}
         rd.write("profiles", profs)
     by_url = {pr["linkedin_url"]: pr for pr in profs["profiles"]}
-    req_url = {}
-    for c in cands:  # map requested url -> profile (HarvestAPI may canonicalise)
-        req_url[c["linkedin_url"]] = by_url.get(c["linkedin_url"])
-    unmatched = [pr for pr in profs["profiles"] if pr["linkedin_url"] not in req_url]
+    by_req = {pr["requested_url"]: pr for pr in profs["profiles"] if pr.get("requested_url")}
+    req_url = {c["linkedin_url"]: by_req.get(c["linkedin_url"]) or by_url.get(c["linkedin_url"]) for c in cands}
+    # caches written before requested_url existed: pair leftovers in order (only safe when nothing was missing)
+    unmatched = [pr for pr in profs["profiles"] if not pr.get("requested_url") and pr["linkedin_url"] not in req_url]
     for c in cands:
         if req_url[c["linkedin_url"]] is None and unmatched:
             req_url[c["linkedin_url"]] = unmatched.pop(0)

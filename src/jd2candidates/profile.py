@@ -87,6 +87,7 @@ def fetch_profiles(candidates: list[dict], budget: Budget, call=treg.call, worke
             else:
                 t["source"] = by_url[url].get("source", "")
                 t["linkedin_url"] = t["linkedin_url"] or url
+                t["requested_url"] = url  # HarvestAPI may canonicalise linkedin_url; this is what pairs it with its candidate
                 got[url] = t
     out["profiles"] = [got[u] for u in by_url if u in got]
     return out
