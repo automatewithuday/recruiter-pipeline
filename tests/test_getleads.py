@@ -62,3 +62,9 @@ def test_count_polls_while_counting(monkeypatch):
         seen.append(url); return next(polls)
     assert getleads.count(SPEC, "k", post=post, get=get) == 1261
     assert seen == [f"{getleads.BASE}/count/abc"] * 2
+
+
+def test_getleads_rows_use_normalised_urls():
+    post = lambda url, body, headers: {"ok": True, "contacts": [{**ROW, "linkedin_url": "http://linkedin.com/in/Asha-K/"}, ROW], "has_more": False}
+    out = getleads.search(SPEC, "k", post=post)
+    assert [c["linkedin_url"] for c in out["candidates"]] == ["https://www.linkedin.com/in/asha-k"]

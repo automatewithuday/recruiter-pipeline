@@ -6,7 +6,7 @@ from pathlib import Path
 
 from . import treg
 
-THRESHOLDS = {"good_must_have_min": 1.2, "good_mean_min": 1.1, "possible_must_have_min": 0.5, "low_confidence": 0.5}
+THRESHOLDS = {"good_must_have_min": 1.2, "good_mean_min": 1.1, "possible_must_have_min": 0.5, "low_confidence": 0.3}  # 0.5 flagged 73% of scored people
 _PROMPT = Path(__file__).parent / "prompts" / "criteria.md"
 _FENCE = re.compile(r"```(?:json)?\s*(\{.*\})\s*```", re.S)
 

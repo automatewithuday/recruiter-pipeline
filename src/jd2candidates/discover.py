@@ -1,4 +1,6 @@
 """Stage 2: spec -> candidate URLs via HarvestAPI lead search (through treg), from four search angles."""
+import re
+
 from . import treg
 from .budget import Budget, BudgetExceeded
 
@@ -7,10 +9,17 @@ MIN_NEW_PER_PAGE = 3
 KEYWORD_ONLY_PAGES = 4  # ponytail: without a title filter the keyword matches thousands; only the top-ranked pages are worth reading
 
 
+def norm_url(url: str) -> str:
+    """One spelling per profile so HarvestAPI and GetLeads rows for the same person collapse: https, www, lower-case slug, no query or slash."""
+    u = url.strip().split("?")[0].split("#")[0].rstrip("/").lower()
+    u = re.sub(r"^https?://(www\.)?", "", u)
+    return "https://www." + u
+
+
 def _row(el: dict, source: str) -> dict:
     pos = (el.get("currentPositions") or [{}])[0]
     return {
-        "linkedin_url": el["linkedinUrl"],
+        "linkedin_url": norm_url(el["linkedinUrl"]),
         "name": " ".join(x for x in (el.get("firstName"), el.get("lastName")) if x),
         "headline": pos.get("title") or el.get("summary") or "",
         "location": (el.get("location") or {}).get("linkedinText") or "",
@@ -58,8 +67,8 @@ def discover(spec: dict, budget: Budget, call=treg.call) -> dict:
                 if not url:
                     out["skipped_no_url"] += 1
                     continue
-                if url not in seen:
-                    seen[url] = _row(el, source)
+                if norm_url(url) not in seen:
+                    seen[norm_url(url)] = _row(el, source)
                     new += 1
             found += new
             if new < MIN_NEW_PER_PAGE:

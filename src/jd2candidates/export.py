@@ -20,6 +20,17 @@ def write_csv(rows: list[dict], soft: list[dict], path: Path) -> None:
         w.writerows(rows)
 
 
+SHORTLIST = FIXED + ["gate_notes", "review_notes"]  # what a recruiter needs to pick up the phone; no per-dimension scores
+
+
+def write_shortlist(rows: list[dict], path: Path) -> None:
+    good = sorted((r for r in rows if r["tier"] == "Good Fit"), key=lambda r: -float(r.get("_mean") or 0))
+    with open(path, "w", newline="") as f:
+        w = csv.DictWriter(f, fieldnames=SHORTLIST, extrasaction="ignore")
+        w.writeheader()
+        w.writerows(good)
+
+
 def write_report(stats: dict, path: Path) -> None:
     s = stats
     lines = [f"# Run report: {s['slug']}", "",

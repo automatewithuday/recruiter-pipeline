@@ -4,6 +4,7 @@ import re
 import time
 import urllib.request
 
+from .discover import norm_url
 from .typesafe import HTTPStatus, urllib_post
 
 BASE = "https://app.getleads.io/api/v1/contacts/search"
@@ -42,7 +43,7 @@ def count(spec: dict, api_key: str, post=urllib_post, get=urllib_get) -> int:
 
 
 def _row(c: dict) -> dict:
-    return {"linkedin_url": c["linkedin_url"], "name": c.get("full_name") or "", "headline": c.get("current_title") or c.get("linkedin_headline") or "",
+    return {"linkedin_url": norm_url(c["linkedin_url"]), "name": c.get("full_name") or "", "headline": c.get("current_title") or c.get("linkedin_headline") or "",
             "location": c.get("contact_location") or "", "source": "getleads"}
 
 
@@ -64,8 +65,8 @@ def search(spec: dict, api_key: str, post=urllib_post) -> dict:
             url = c.get("linkedin_url")
             if not url:
                 out["skipped_no_url"] += 1
-            elif url not in seen:
-                seen.add(url)
+            elif norm_url(url) not in seen:
+                seen.add(norm_url(url))
                 out["candidates"].append(_row(c))
         if resp.get("credits_exhausted"):
             out["stopped"] = "credits"

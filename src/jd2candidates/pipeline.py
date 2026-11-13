@@ -60,8 +60,8 @@ def _row(cand: dict, prof: dict | None, g: dict | None, scores: dict | None, ver
     r["tier"], r["_mean"] = verdict["tier"], verdict["mean"]
     if g["total_years"]["result"] == "over_range" and r["tier"] == "Good Fit":
         r["tier"] = "Possible Fit"  # senior beyond the JD's range: unlikely to move for this role, so never the headline list
-    r["review_notes"] = ", ".join(verdict["review_notes"])
     names = {d["id"]: d["name"] for d in spec["soft"]}
+    r["review_notes"] = ("Scoring unsure on: " + ", ".join(names[i] for i in verdict["review_notes"])) if verdict["review_notes"] else ""
     top = sorted(((v["score"], k) for k, v in scores.items()), reverse=True)[:2]
     word = lambda s: "strong" if s >= 1.5 else "partial" if s >= 0.75 else "weak"
     r["fit_summary"] = ", ".join(f"{names[k]} {word(s)}" for s, k in top)
@@ -103,6 +103,14 @@ def run(jd_path: Path, budget_usd: float = 10.0, from_stage: int = 0, source: st
             sys.exit(1)
         _confirm(msg, yes)
         d = getleads.search(spec, gl_key, post=_gl_post) if source == "getleads" else discover.discover(spec, budget, call=_call)
+        if source == "both" and gl_key:  # GetLeads rows that HarvestAPI did not already find; URLs are normalised on both sides
+            g = getleads.search(spec, gl_key, post=_gl_post)
+            have = {c["linkedin_url"] for c in d["candidates"]}
+            extra = [c for c in g["candidates"] if c["linkedin_url"] not in have]
+            d["candidates"] += extra
+            d["angles"]["getleads"] = len(extra)
+            d["pages"] += g["pages"]; d["skipped_no_url"] += g["skipped_no_url"]; d["credits_used"] = g["credits_used"]
+            d["stopped"] = d.get("stopped") or g.get("stopped")
         cost["discover"] = d["charged_usd"]
         stopped = d.get("stopped")
         cands = d["candidates"]
@@ -168,6 +176,7 @@ def run(jd_path: Path, budget_usd: float = 10.0, from_stage: int = 0, source: st
             r["ask_on_call"] = "\n".join(f"{i}. {q}" for i, q in enumerate(n["ask_on_call"], 1))
     out = rd.path / "candidates.csv"
     export.write_csv(rows, spec["soft"], out)
+    export.write_shortlist(rows, rd.path / "shortlist.csv")
     export.write_report({
         "slug": spec["slug"], "pool": len(cands), "pages": dstats.get("pages", "?"), "skipped_no_url": dstats.get("skipped_no_url", "?"),
         "angles": dstats.get("angles"),
