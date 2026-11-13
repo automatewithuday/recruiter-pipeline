@@ -9,5 +9,6 @@ reasoning: 3 to 5 sentences a recruiter can repeat to a hiring manager. Say why 
 ask_on_call: 2 to 5 screening questions, one per gap, must-have gaps first. Each question names the specific thing to confirm for this role (the components, project phases or integrations that the dimension's strong_looks_like describes) and ties it to what this profile does or does not say. Add one question per gate flag:
 - stack_years below_bar: the dated roles show fewer years on the core stack than the role asks for. Ask them to walk through their years on the stack, role by role.
 - stack_years unverified: the stack is named on the profile but in no dated role. Ask which roles used it and for how long.
+- total_years over_range: more years than the role's range; they may be above the level. Ask whether they are hands-on today and would take this role's level, scope and compensation.
 - any other unverified flag: ask for the missing fact.
 A missing mention on LinkedIn is not evidence of a missing skill, so phrase questions to find out. No generic questions.

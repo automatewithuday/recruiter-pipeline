@@ -7,6 +7,7 @@ Schema (every key required):
     "country_code": "<ISO 3166-1 alpha-2 of the required candidate location>",
     "country_name": "<country name in English>",
     "min_total_years": <int, total IT/professional years the JD requires, 0 if unstated>,
+    "max_total_years": <int, upper end of the JD's experience range plus 3 years of slack, 0 if the JD gives no upper end>,
     "min_stack_years": <int, years in the core stack the JD requires, 0 if unstated>,
     "stack_terms": [<every spelling, acronym and expansion of the core technologies, e.g. "CC&B", "CCB", "Customer Care and Billing">]
   },
@@ -18,7 +19,7 @@ Schema (every key required):
     "boolean": "<the stack terms and their synonyms joined with OR, double quotes for phrases>",
     "current_titles": [<6 to 10 current job titles a matching person would hold>],
     "stack_titles": [<3 to 6 short product or stack names that appear inside job titles, e.g. "Oracle Utilities", "CC&B", "C2M"; used as a fuzzy title filter on current and past titles>],
-    "exclude_titles": [<titles that never fit: tester, recruiter, intern, student, trainer, plus role-specific ones>],
+    "exclude_titles": [<titles that never fit: tester, recruiter, intern, student, trainer, plus role-specific ones; for a hands-on or lead role also the levels above it that would not move for it: Director, Partner, Vice President, VP, Head, Chief, CEO, Founder, Practice Lead, Product Manager, Program Manager, Delivery Manager>],
     "geo_ids": [],
     "years_of_experience_ids": [<from min_total_years using the map 1:<1y 2:1-2y 3:3-5y 4:6-10y 5:>10y; include every band at or above the requirement>],
     "max_pages": 20

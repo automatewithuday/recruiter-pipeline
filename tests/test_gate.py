@@ -80,3 +80,14 @@ def test_stack_years_near_miss_and_undated_mention_are_flagged_not_failed():
     undated["headline"] = "Oracle Utilities CC&B specialist"
     g = gate.apply(undated, hard, TODAY)
     assert g["stack_years"] == {"result": "unverified", "value": 0.0} and g["passed"]
+
+
+def test_total_years_over_range_is_flagged_not_failed():
+    from datetime import date
+    prof = {"country_code": "IN", "headline": "", "about": "", "skills": [],
+            "experience": [{"title": "CC&B Lead", "company": "X", "description": "", "skills": [], "start": {"year": 2004, "month": 1}, "end": None}]}
+    hard = {"country_code": "IN", "min_total_years": 10, "max_total_years": 18, "min_stack_years": 8, "stack_terms": ["CC&B"]}
+    g = gate.apply(prof, hard, date(2026, 11, 13))
+    assert g["total_years"] == {"result": "over_range", "value": 22.8} and g["passed"]
+    hard["max_total_years"] = 0  # unstated in the JD: no cap
+    assert gate.apply(prof, hard, date(2026, 11, 13))["total_years"]["result"] == "pass"

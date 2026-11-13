@@ -50,7 +50,8 @@ def apply(profile: dict, hard: dict, today: date, exclude_titles: list[str] | No
     else:
         all_r = [(_start(e["start"]), _end(e["end"], today)) for e in dated]
         total = round(_years([(min(s for s, _ in all_r), today)]), 1)
-        g["total_years"] = R("pass" if total >= hard["min_total_years"] else "fail", total)
+        cap = hard.get("max_total_years") or 0  # 0 = the JD states no upper bound
+        g["total_years"] = R("fail" if total < hard["min_total_years"] else "over_range" if cap and total > cap else "pass", total)
         stack_r = [(_start(e["start"]), _end(e["end"], today)) for e in dated
                    if matches_stack(f'{e.get("title","")} {e.get("description","")} {" ".join(e.get("skills") or [])}', hard["stack_terms"])]
         stack = round(_years(stack_r), 1) if stack_r else 0.0
