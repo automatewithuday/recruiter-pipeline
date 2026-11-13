@@ -26,7 +26,7 @@ def _req(d: dict, path: str):
 
 def validate_spec(spec: dict) -> None:
     for p in ("slug", "hard.country_code", "hard.country_name", "hard.min_total_years", "hard.min_stack_years",
-              "hard.stack_terms", "search.boolean", "search.current_titles", "search.exclude_titles",
+              "hard.stack_terms", "search.boolean", "search.current_titles", "search.stack_titles", "search.exclude_titles",
               "search.geo_ids", "search.years_of_experience_ids", "search.max_pages", "thresholds"):
         _req(spec, p)
     if len(_req(spec, "search.boolean")) > 300:

@@ -102,5 +102,5 @@ def test_profile_pairs_with_its_candidate_when_another_is_missing(tmp_path, monk
     out = pipeline.run(FX / "jd_oracle.md", budget_usd=10, from_stage=1, source="harvest", yes=True)
     rows = list(csv.DictReader(open(out)))
     missing = [r for r in rows if r["gate_notes"] == "profile_missing"]
-    assert [r["full_name"] for r in missing] == [discover._row(leads[1])["name"]]
+    assert [r["full_name"] for r in missing] == [discover._row(leads[1], "x")["name"]]
     assert {r["full_name"] for r in rows if r not in missing} == {f"P{n}" for n in range(len(urls)) if n != 1}

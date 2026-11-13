@@ -5,32 +5,118 @@
     "country_name": "India",
     "min_total_years": 10,
     "min_stack_years": 8,
-    "stack_terms": ["C2M", "Customer to Meter", "CC&B", "CCB", "Customer Care and Billing",
-                    "MDM", "Meter Data Management", "OUAF", "Oracle Utilities"]
+    "stack_terms": [
+      "C2M",
+      "Customer to Meter",
+      "CC&B",
+      "CCB",
+      "Customer Care and Billing",
+      "MDM",
+      "Meter Data Management",
+      "OUAF",
+      "Oracle Utilities"
+    ]
   },
   "soft": [
-    {"id": "ouaf_hands_on", "name": "Hands-on OUAF components (BO/MO, scripts, UI maps, batch, algorithms)", "must_have": true,
-     "levels": ["No sign of building OUAF components; configuration or functional work only",
-                "Mentions OUAF development in general terms or one or two component types",
-                "Names several OUAF component types built by hand, such as business objects, service scripts, UI maps, batch, algorithms or plug-ins"]},
-    {"id": "stack_breadth", "name": "Breadth across C2M, CC&B and MDM", "must_have": true,
-     "levels": ["Only one of C2M, CC&B, MDM appears", "Two of the three appear in roles or skills", "All three appear in hands-on roles"]},
-    {"id": "integrations", "name": "Integrations with ERP, CRM, GIS, payment gateways or middleware", "must_have": false,
-     "levels": ["No integration work described", "Integration mentioned without specifics", "Designed or built named integrations with external systems"]},
-    {"id": "end_to_end", "name": "End-to-end Oracle Utilities implementation delivery", "must_have": true,
-     "levels": ["Support or enhancement work only", "Part of an implementation phase", "Delivered full implementations through go-live, more than once"]},
-    {"id": "leadership", "name": "Technical team leadership and mentoring", "must_have": false,
-     "levels": ["Individual contributor only", "Informal lead or small team", "Led technical teams, ran code reviews or design authority"]},
-    {"id": "client_facing", "name": "Client workshops, demos and stakeholder management", "must_have": false,
-     "levels": ["No client-facing work", "Some client interaction", "Ran workshops, demos or owned client relationships"]}
+    {
+      "id": "ouaf_hands_on",
+      "name": "Hands-on OUAF components (BO/MO, scripts, UI maps, batch, algorithms)",
+      "must_have": true,
+      "levels": [
+        "No sign of building OUAF components; configuration or functional work only",
+        "Mentions OUAF development in general terms or one or two component types",
+        "Names several OUAF component types built by hand, such as business objects, service scripts, UI maps, batch, algorithms or plug-ins"
+      ]
+    },
+    {
+      "id": "stack_breadth",
+      "name": "Breadth across C2M, CC&B and MDM",
+      "must_have": true,
+      "levels": [
+        "Only one of C2M, CC&B, MDM appears",
+        "Two of the three appear in roles or skills",
+        "All three appear in hands-on roles"
+      ]
+    },
+    {
+      "id": "integrations",
+      "name": "Integrations with ERP, CRM, GIS, payment gateways or middleware",
+      "must_have": false,
+      "levels": [
+        "No integration work described",
+        "Integration mentioned without specifics",
+        "Designed or built named integrations with external systems"
+      ]
+    },
+    {
+      "id": "end_to_end",
+      "name": "End-to-end Oracle Utilities implementation delivery",
+      "must_have": true,
+      "levels": [
+        "Support or enhancement work only",
+        "Part of an implementation phase",
+        "Delivered full implementations through go-live, more than once"
+      ]
+    },
+    {
+      "id": "leadership",
+      "name": "Technical team leadership and mentoring",
+      "must_have": false,
+      "levels": [
+        "Individual contributor only",
+        "Informal lead or small team",
+        "Led technical teams, ran code reviews or design authority"
+      ]
+    },
+    {
+      "id": "client_facing",
+      "name": "Client workshops, demos and stakeholder management",
+      "must_have": false,
+      "levels": [
+        "No client-facing work",
+        "Some client interaction",
+        "Ran workshops, demos or owned client relationships"
+      ]
+    }
   ],
   "search": {
     "boolean": "(\"Oracle Utilities\" OR C2M OR \"CC&B\" OR CCB OR OUAF OR \"Customer Care and Billing\") AND (Lead OR Architect OR Senior OR Manager) NOT (Tester OR Recruiter)",
-    "current_titles": ["Technical Lead", "Solution Architect", "Technical Architect", "Lead Consultant", "Senior Consultant", "Development Lead"],
-    "exclude_titles": ["Tester", "Test Lead", "Recruiter", "Intern", "Student", "Trainer"],
-    "geo_ids": ["102713980"],
-    "years_of_experience_ids": ["4", "5"],
-    "max_pages": 20
+    "current_titles": [
+      "Technical Lead",
+      "Solution Architect",
+      "Technical Architect",
+      "Lead Consultant",
+      "Senior Consultant",
+      "Development Lead"
+    ],
+    "exclude_titles": [
+      "Tester",
+      "Test Lead",
+      "Recruiter",
+      "Intern",
+      "Student",
+      "Trainer"
+    ],
+    "geo_ids": [
+      "102713980"
+    ],
+    "years_of_experience_ids": [
+      "4",
+      "5"
+    ],
+    "max_pages": 20,
+    "stack_titles": [
+      "Oracle Utilities",
+      "CC&B",
+      "C2M",
+      "OUAF",
+      "CCB"
+    ]
   },
-  "thresholds": {"good_must_have_min": 1.2, "good_mean_min": 1.1, "possible_must_have_min": 0.5, "low_confidence": 0.5}
+  "thresholds": {
+    "good_must_have_min": 1.2,
+    "good_mean_min": 1.1,
+    "possible_must_have_min": 0.5,
+    "low_confidence": 0.5
+  }
 }

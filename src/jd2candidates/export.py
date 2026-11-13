@@ -23,7 +23,10 @@ def write_csv(rows: list[dict], soft: list[dict], path: Path) -> None:
 def write_report(stats: dict, path: Path) -> None:
     s = stats
     lines = [f"# Run report: {s['slug']}", "",
-             f"- Pool found: {s['pool']} (pages {s['pages']}, skipped no-URL {s['skipped_no_url']})",
+             f"- Pool found: {s['pool']} (pages {s['pages']}, skipped no-URL {s['skipped_no_url']})"]
+    if s.get("angles"):
+        lines += [f"  - {k}: {v}" for k, v in s["angles"].items()]
+    lines += [
              f"- Profiles read: {s['profiles_read']}, missing: {s['profiles_missing']}",
              f"- Gates: pass {s['gate_pass']}, fail {s['gate_fail']}, flagged and scored (unverified or below bar) {s['gate_flagged']}",
              f"- Jev scored: {s['scored']}, failed: {s['jev_failed']}",

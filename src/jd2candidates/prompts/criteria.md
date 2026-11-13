@@ -17,6 +17,7 @@ Schema (every key required):
   "search": {
     "boolean": "<the stack terms and their synonyms joined with OR, double quotes for phrases>",
     "current_titles": [<6 to 10 current job titles a matching person would hold>],
+    "stack_titles": [<3 to 6 short product or stack names that appear inside job titles, e.g. "Oracle Utilities", "CC&B", "C2M"; used as a fuzzy title filter on current and past titles>],
     "exclude_titles": [<titles that never fit: tester, recruiter, intern, student, trainer, plus role-specific ones>],
     "geo_ids": [],
     "years_of_experience_ids": [<from min_total_years using the map 1:<1y 2:1-2y 3:3-5y 4:6-10y 5:>10y; include every band at or above the requirement>],

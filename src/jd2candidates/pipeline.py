@@ -12,11 +12,12 @@ from .cache import RunDir
 _call = treg.call
 _post = typesafe.urllib_post
 _ask = notes.ask
-PAGE_USD, PROFILE_USD, ROWS_PER_PAGE, UNIQUE_RATE = 0.10, 0.0064, 25, 0.6
+PAGE_USD, PROFILE_USD, ROWS_PER_PAGE, UNIQUE_RATE = 0.05, 0.0032, 25, 0.6  # as billed by treg on 2026-11-13 (catalog lists double)
 
 
 def estimate(spec: dict) -> float:
-    pages = int(spec["search"]["max_pages"])
+    """Upper bound: every angle runs to its page cap. Angles usually stop early when pages add fewer than 3 new people."""
+    pages = sum(cap for _, _, cap in discover.angles(spec))
     return pages * PAGE_USD + pages * ROWS_PER_PAGE * UNIQUE_RATE * PROFILE_USD
 
 
@@ -86,7 +87,7 @@ def run(jd_path: Path, budget_usd: float = 10.0, from_stage: int = 0, source: st
     cands = None if redo(2) else rd.read("candidates")
     if cands is None:
         est = estimate(spec)
-        msg = f"{_summary(spec)}\n\nPre-run estimate: {est:.2f} USD (budget {budget_usd:.2f})"
+        msg = f"{_summary(spec)}\n\nPre-run estimate (upper bound, {len(discover.angles(spec))} search angles): {est:.2f} USD (budget {budget_usd:.2f})"
         if est > budget_usd:
             print(msg + "\nEstimate exceeds budget; lower max_pages in the spec or raise --budget.")
             sys.exit(1)
@@ -159,6 +160,7 @@ def run(jd_path: Path, budget_usd: float = 10.0, from_stage: int = 0, source: st
     export.write_csv(rows, spec["soft"], out)
     export.write_report({
         "slug": spec["slug"], "pool": len(cands), "pages": dstats.get("pages", "?"), "skipped_no_url": dstats.get("skipped_no_url", "?"),
+        "angles": dstats.get("angles"),
         "profiles_read": len(profs["profiles"]), "profiles_missing": len(profs["missing"]),
         "gate_pass": sum(1 for g in gates.values() if g["passed"] and all(v["result"] == "pass" for k, v in g.items() if k != "passed")),
         "gate_fail": sum(1 for g in gates.values() if not g["passed"]),
