@@ -1,0 +1,90 @@
+{
+ "status": 200,
+ "element": {
+  "id": "555",
+  "publicIdentifier": "asha-k",
+  "linkedinUrl": "https://www.linkedin.com/in/asha-k",
+  "firstName": "Asha",
+  "lastName": "K",
+  "headline": "Oracle Utilities C2M Technical Lead",
+  "about": "12 years in Oracle Utilities.",
+  "location": {
+   "linkedinText": "Pune, Maharashtra, India",
+   "countryCode": "IN",
+   "parsed": {
+    "country": "India"
+   }
+  },
+  "skills": [
+   {
+    "name": "Oracle CC&B"
+   },
+   {
+    "name": "Java"
+   }
+  ],
+  "experience": [
+   {
+    "position": "Technical Lead",
+    "companyName": "Wipro",
+    "description": "C2M upgrades, OUAF BO/MO, service scripts",
+    "skills": [
+     {
+      "name": "C2M"
+     }
+    ],
+    "startDate": {
+     "month": 3,
+     "year": 2021,
+     "text": "Mar 2021"
+    },
+    "endDate": {
+     "text": "Present"
+    },
+    "companyLogo": {
+     "url": "x",
+     "sizes": []
+    }
+   },
+   {
+    "position": "Senior Developer",
+    "companyName": "IBM",
+    "description": "CC&B billing batch and algorithms",
+    "skills": [],
+    "startDate": {
+     "month": null,
+     "year": 2016,
+     "text": "2016"
+    },
+    "endDate": {
+     "month": 2,
+     "year": 2021,
+     "text": "Feb 2021"
+    }
+   },
+   {
+    "position": "Developer",
+    "companyName": "Infosys",
+    "description": "Java web apps",
+    "skills": [],
+    "startDate": {
+     "month": 7,
+     "year": 2013,
+     "text": "Jul 2013"
+    },
+    "endDate": {
+     "month": null,
+     "year": 2016,
+     "text": "2016"
+    }
+   }
+  ],
+  "education": [],
+  "certifications": [
+   {
+    "name": "Oracle Utilities CC&B Certified"
+   }
+  ],
+  "receivedRecommendations": []
+ }
+}
