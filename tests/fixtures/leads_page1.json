@@ -1,0 +1,435 @@
+{
+ "pagination": {
+  "totalPages": 5,
+  "pageNumber": 1,
+  "pageSize": 25
+ },
+ "elements": [
+  {
+   "id": "1000",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw000",
+   "firstName": "F0",
+   "lastName": "L0",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1001",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw001",
+   "firstName": "F1",
+   "lastName": "L1",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1002",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw002",
+   "firstName": "F2",
+   "lastName": "L2",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1003",
+   "linkedinUrl": null,
+   "firstName": "F3",
+   "lastName": "L3",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1004",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw004",
+   "firstName": "F4",
+   "lastName": "L4",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1005",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw005",
+   "firstName": "F5",
+   "lastName": "L5",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1006",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw006",
+   "firstName": "F6",
+   "lastName": "L6",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1007",
+   "linkedinUrl": null,
+   "firstName": "F7",
+   "lastName": "L7",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1008",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw008",
+   "firstName": "F8",
+   "lastName": "L8",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1009",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw009",
+   "firstName": "F9",
+   "lastName": "L9",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1010",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw010",
+   "firstName": "F10",
+   "lastName": "L10",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1011",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw011",
+   "firstName": "F11",
+   "lastName": "L11",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1012",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw012",
+   "firstName": "F12",
+   "lastName": "L12",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1013",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw013",
+   "firstName": "F13",
+   "lastName": "L13",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1014",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw014",
+   "firstName": "F14",
+   "lastName": "L14",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1015",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw015",
+   "firstName": "F15",
+   "lastName": "L15",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1016",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw016",
+   "firstName": "F16",
+   "lastName": "L16",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1017",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw017",
+   "firstName": "F17",
+   "lastName": "L17",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1018",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw018",
+   "firstName": "F18",
+   "lastName": "L18",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1019",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw019",
+   "firstName": "F19",
+   "lastName": "L19",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1020",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw020",
+   "firstName": "F20",
+   "lastName": "L20",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1021",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw021",
+   "firstName": "F21",
+   "lastName": "L21",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1022",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw022",
+   "firstName": "F22",
+   "lastName": "L22",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1023",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw023",
+   "firstName": "F23",
+   "lastName": "L23",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  },
+  {
+   "id": "1024",
+   "linkedinUrl": "https://www.linkedin.com/in/ACw024",
+   "firstName": "F24",
+   "lastName": "L24",
+   "summary": "Oracle Utilities C2M",
+   "location": {
+    "linkedinText": "Pune, Maharashtra, India"
+   },
+   "currentPositions": [
+    {
+     "title": "Technical Lead",
+     "companyName": "Co",
+     "current": true
+    }
+   ]
+  }
+ ],
+ "status": 200
+}
