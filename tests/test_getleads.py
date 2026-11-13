@@ -18,7 +18,8 @@ def test_count_sends_filters_and_returns_total():
     n = getleads.count(SPEC, "glb_live_x", post=post)
     url, body, headers = seen[0]
     assert n == 1261 and url.endswith("/api/v1/contacts/search/count") and headers == {"X-API-Key": "glb_live_x"}
-    assert body["countries"] == ["India"] and body["linkedin_headline"] == ",".join(SPEC["hard"]["stack_terms"])
+    assert body["countries"] == ["India"]
+    assert body["linkedin_headline"] == "Oracle Utilities,C2M,CC&B,CCB,OUAF,Customer Care and Billing"  # the boolean's OR terms, unquoted
     assert body["exclude_job_titles"] == SPEC["search"]["exclude_titles"]
 
 
@@ -49,3 +50,15 @@ def test_rows_without_linkedin_url_are_skipped():
     post = lambda url, body, headers: {"ok": True, "contacts": [ROW, {**ROW, "linkedin_url": ""}], "has_more": False}
     out = getleads.search(SPEC, "k", post=post)
     assert len(out["candidates"]) == 1 and out["skipped_no_url"] == 1
+
+
+def test_count_polls_while_counting(monkeypatch):
+    monkeypatch.setattr(getleads.time, "sleep", lambda s: None)
+    polls = iter([{"ok": True, "status": "counting", "total_matching": None}, {"ok": True, "status": "done", "total_matching": 1261}])
+    seen = []
+    def post(url, body, headers):
+        return {"ok": True, "status": "counting", "count_id": "abc", "total_matching": None, "retry_after_seconds": 10}
+    def get(url, headers):
+        seen.append(url); return next(polls)
+    assert getleads.count(SPEC, "k", post=post, get=get) == 1261
+    assert seen == [f"{getleads.BASE}/count/abc"] * 2
