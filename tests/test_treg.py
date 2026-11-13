@@ -33,3 +33,9 @@ def test_call_builds_argv(monkeypatch):
     monkeypatch.setattr(subprocess, "run", run)
     treg.call("tool.x", {"a": "1", "b": "two words"})
     assert seen["argv"] == ["treg", "call", "tool.x", "-p", "a=1", "-p", "b=two words"]
+
+
+def test_call_raises_on_provider_error_body(monkeypatch):
+    monkeypatch.setattr(subprocess, "run", _fake('{"status":400,"error":"search is too long"}', "treg: charged $0\n"))
+    with pytest.raises(treg.TregError, match="too long"):
+        treg.call("t", {})

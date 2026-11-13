@@ -7,10 +7,25 @@ from .budget import Budget, BudgetExceeded
 PROFILE = "harvestapi.linkedin.user.profile"
 
 
+_MONTHS = {m: i for i, m in enumerate(["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"], 1)}
+
+
+def _month(v) -> int | None:
+    if v is None or v == "":
+        return None
+    if isinstance(v, int):
+        return v
+    s = str(v).strip().lower()
+    return int(s) if s.isdigit() else _MONTHS.get(s[:3])
+
+
 def _date(d) -> dict | None:
     if not d or not d.get("year"):
         return None
-    return {"year": d["year"], "month": d.get("month")}
+    try:
+        return {"year": int(d["year"]), "month": _month(d.get("month"))}
+    except (TypeError, ValueError):
+        return None
 
 
 def _names(items) -> list[str]:

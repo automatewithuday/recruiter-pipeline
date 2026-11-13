@@ -44,3 +44,13 @@ def test_fetch_stops_on_budget():
     cands = [{"linkedin_url": f"https://www.linkedin.com/in/p{i}"} for i in range(6)]
     out = profile.fetch_profiles(cands, Budget(0.02), call=call, workers=1)
     assert out["stopped"] == "budget" and len(out["profiles"]) == 3
+
+
+def test_trim_coerces_string_dates():
+    raw = json.loads(json.dumps(RAW))
+    raw["element"]["experience"][0]["startDate"] = {"month": "3", "year": "2021"}
+    raw["element"]["experience"][0]["endDate"] = {"month": "", "year": "2023"}
+    raw["element"]["experience"][1]["startDate"] = {"month": "Feb", "year": 2016}
+    ex = profile.trim(raw)["experience"]
+    assert ex[0]["start"] == {"year": 2021, "month": 3} and ex[0]["end"] == {"year": 2023, "month": None}
+    assert ex[1]["start"] == {"year": 2016, "month": 2}

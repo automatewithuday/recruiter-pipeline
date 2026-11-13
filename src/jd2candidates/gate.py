@@ -54,7 +54,15 @@ def apply(profile: dict, hard: dict, today: date, exclude_titles: list[str] | No
         stack_r = [(_start(e["start"]), _end(e["end"], today)) for e in dated
                    if matches_stack(f'{e.get("title","")} {e.get("description","")} {" ".join(e.get("skills") or [])}', hard["stack_terms"])]
         stack = round(_years(stack_r), 1) if stack_r else 0.0
-        g["stack_years"] = R("pass" if stack >= hard["min_stack_years"] else "fail", stack)
+        elsewhere = f'{profile.get("headline", "")} {profile.get("about", "")} {" ".join(profile.get("skills") or [])}'
+        if stack >= hard["min_stack_years"]:
+            g["stack_years"] = R("pass", stack)
+        elif stack >= hard.get("stack_years_floor", hard["min_stack_years"]):
+            g["stack_years"] = R("below_bar", stack)  # near miss: scored and flagged for the recruiter
+        elif not stack_r and matches_stack(elsewhere, hard["stack_terms"]):
+            g["stack_years"] = R("unverified", stack)  # stack named on the profile but in no dated role
+        else:
+            g["stack_years"] = R("fail", stack)
 
     current = next((e for e in profile.get("experience", []) if e.get("end") is None), None)
     title = (current or {}).get("title", "")

@@ -68,3 +68,15 @@ def test_excluded_current_title():
     p = prof([exp("QA Tester", {"year": 2010, "month": 1}, None, "C2M testing")])
     g = gate.apply(p, HARD, TODAY, exclude_titles=["Tester"])
     assert g["excluded_title"]["result"] == "fail" and g["excluded_title"]["value"] == "QA Tester"
+
+
+def test_stack_years_near_miss_and_undated_mention_are_flagged_not_failed():
+    hard = {**HARD, "min_stack_years": 8, "stack_years_floor": 5}
+    near = gate.apply(prof([exp("CC&B Lead", {"year": 2020, "month": 11}, None), exp("Dev", {"year": 2010, "month": 1}, {"year": 2020, "month": 10})]), hard, TODAY)
+    assert near["stack_years"] == {"result": "below_bar", "value": 6.0} and near["passed"]
+    assert gate.apply(prof([exp("CC&B Lead", {"year": 2020, "month": 11}, None)]), {**HARD, "min_stack_years": 8}, TODAY)["stack_years"]["result"] == "fail"
+    undated = prof([exp("Senior Consultant", {"year": 2010, "month": 1}, None)])
+    assert gate.apply(undated, hard, TODAY)["stack_years"]["result"] == "fail"
+    undated["headline"] = "Oracle Utilities CC&B specialist"
+    g = gate.apply(undated, hard, TODAY)
+    assert g["stack_years"] == {"result": "unverified", "value": 0.0} and g["passed"]

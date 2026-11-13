@@ -29,6 +29,8 @@ def validate_spec(spec: dict) -> None:
               "hard.stack_terms", "search.boolean", "search.current_titles", "search.exclude_titles",
               "search.geo_ids", "search.years_of_experience_ids", "search.max_pages", "thresholds"):
         _req(spec, p)
+    if len(_req(spec, "search.boolean")) > 300:
+        raise SpecError("search.boolean over 300 chars (HarvestAPI limit)")
     if not _req(spec, "hard.country_code"):
         raise SpecError("missing: hard.country_code (JD states no location)")
     soft = _req(spec, "soft")

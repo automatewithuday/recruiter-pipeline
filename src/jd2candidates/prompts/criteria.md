@@ -15,7 +15,7 @@ Schema (every key required):
      "levels": ["<what ABSENT evidence looks like in a profile>", "<what PARTIAL evidence looks like>", "<what STRONG evidence looks like>"]}
   ],
   "search": {
-    "boolean": "<LinkedIn boolean over the stack terms and seniority words, using AND, OR, NOT and double quotes for phrases>",
+    "boolean": "<the stack terms and their synonyms joined with OR, double quotes for phrases>",
     "current_titles": [<6 to 10 current job titles a matching person would hold>],
     "exclude_titles": [<titles that never fit: tester, recruiter, intern, student, trainer, plus role-specific ones>],
     "geo_ids": [],
@@ -28,5 +28,6 @@ Schema (every key required):
 Rules:
 - Levels are concrete and specific to this JD: name the components, systems or activities a profile would mention. Each level stands on its own.
 - must_have is true for at most half the dimensions, and only for things the JD calls required or essential.
+- search.boolean is one OR list of stack terms, at most 300 characters (API limit). No AND or NOT groups: they collapse the result count. current_titles, years_of_experience_ids and exclude_titles carry seniority and exclusions.
 - Leave geo_ids empty; code fills it.
 - If the JD gives no location, set country_code and country_name to empty strings.

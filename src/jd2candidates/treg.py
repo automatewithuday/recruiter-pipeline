@@ -18,4 +18,7 @@ def call(tool: str, params: dict[str, str]) -> tuple[dict, float]:
     if r.returncode != 0:
         raise TregError(r.stderr.strip() or r.stdout.strip())
     m = _CHARGE.search(r.stderr)
-    return json.loads(r.stdout), float(m.group(1)) if m else 0.0
+    data = json.loads(r.stdout)
+    if isinstance(data, dict) and data.get("error"):  # provider 4xx arrives with rc 0
+        raise TregError(f"{tool}: {data['error']}")
+    return data, float(m.group(1)) if m else 0.0

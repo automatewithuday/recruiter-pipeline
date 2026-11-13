@@ -54,3 +54,13 @@ def test_jd_to_spec_fills_geo_ids_when_empty(monkeypatch):
     monkeypatch.setattr(subprocess, "run", lambda argv, **k: subprocess.CompletedProcess(args=argv, returncode=0, stdout=json.dumps(s), stderr=""))
     monkeypatch.setattr(criteria.treg, "call", lambda tool, params: ({"elements": [{"geoId": "102713980", "title": "India"}]}, 0.0))
     assert criteria.jd_to_spec("x")["search"]["geo_ids"] == ["102713980"]
+
+
+def test_validate_rejects_boolean_over_300_chars():
+    import json, pytest
+    from pathlib import Path
+    from jd2candidates import criteria
+    spec = json.loads((Path(__file__).parent / "fixtures" / "spec_oracle.json").read_text())
+    spec["search"]["boolean"] = "x" * 301
+    with pytest.raises(criteria.SpecError, match="300"):
+        criteria.validate_spec(spec)
