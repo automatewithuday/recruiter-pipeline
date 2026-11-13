@@ -24,7 +24,7 @@ SHORTLIST = FIXED + ["gate_notes", "review_notes"]  # what a recruiter needs to 
 
 
 def write_shortlist(rows: list[dict], path: Path) -> None:
-    good = sorted((r for r in rows if r["tier"] == "Good Fit"), key=lambda r: -float(r.get("_mean") or 0))
+    good = sorted((r for r in rows if r["tier"] == "Good Fit"), key=lambda r: (bool(r.get("gate_notes")), -float(r.get("_mean") or 0)))  # clean rows first, then flagged
     with open(path, "w", newline="") as f:
         w = csv.DictWriter(f, fieldnames=SHORTLIST, extrasaction="ignore")
         w.writeheader()
