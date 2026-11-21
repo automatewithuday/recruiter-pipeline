@@ -111,8 +111,8 @@ Outputs land in `runs/<slug>/`. Every stage is cached there; rerunning only pays
 
 Needs:
 
-- `treg` CLI authenticated (HarvestAPI access is injected server-side).
-- `claude` CLI logged in (Sonnet writes the spec, Haiku writes the notes).
-- `.env` with `TYPESAFE_API_KEY` (Jev scoring) and optionally `GETLEADS_API_KEY` (second discovery source; counts are free, rows cost 1 credit).
+- The LinkedIn data provider's CLI authenticated on this machine.
+- The AI model CLI logged in (used for the spec and the recruiter notes).
+- A `.env` file with the scoring API key, and optionally the second data source's key. The variable names are in `src/jd2candidates/tier.py` and `src/jd2candidates/getleads.py`.
 
 Design notes: `docs/specs/`. Tests: `uv run pytest -q`.
