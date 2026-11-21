@@ -113,6 +113,6 @@ Needs:
 
 - The LinkedIn data provider's CLI authenticated on this machine.
 - The AI model CLI logged in (used for the spec and the recruiter notes).
-- A `.env` file with the scoring API key, and optionally the second data source's key. The variable names are in `src/jd2candidates/tier.py` and `src/jd2candidates/getleads.py`.
+- A `.env` file with the scoring API key, and optionally the second data source's key. The variable names are at the top of the scoring and second-source modules in `src/jd2candidates/`.
 
 Design notes: `docs/specs/`. Tests: `uv run pytest -q`.
