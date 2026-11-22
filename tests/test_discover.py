@@ -23,7 +23,7 @@ def test_dedupes_and_counts_skipped():
     urls = [c["linkedin_url"] for c in out["candidates"]]
     assert len(urls) == len(set(urls)) == 25  # 23 from p1 with url + 2 new on p2; the other angles see the same people again
     assert out["skipped_no_url"] == 2 * 4  # the two URL-less rows on p1 are counted once per angle
-    assert out["candidates"][0] == {"linkedin_url": "https://www.linkedin.com/in/acw000", "name": "F0 L0",
+    assert out["candidates"][0] == {"linkedin_url": "https://www.linkedin.com/in/ACw000", "name": "F0 L0",
                                     "headline": "Technical Lead", "location": "Pune, Maharashtra, India", "source": "harvest_leads"}
 
 
@@ -78,7 +78,7 @@ def test_angles_run_in_order_and_dedupe_across_them():
     assert all(p["geoIds"] == "102713980" and p["excludeCurrentJobTitles"] for p in seen)
     assert len(out["candidates"]) == 25 and out["pages"] == 4
     src = {c["linkedin_url"]: c["source"] for c in out["candidates"]}
-    assert src["https://www.linkedin.com/in/acw000"] == "harvest_leads"  # first angle keeps the person
+    assert src["https://www.linkedin.com/in/ACw000"] == "harvest_leads"  # first angle keeps the person
     assert src["https://www.linkedin.com/in/past1"] == "harvest_leads:past_title_names_stack"
     assert out["angles"] == {"harvest_leads": 23, "harvest_leads:title_names_stack": 0,
                              "harvest_leads:past_title_names_stack": 2, "harvest_leads:keyword_no_title_filter": 0}
@@ -96,9 +96,10 @@ def test_keyword_only_angle_is_capped():
 
 
 def test_urls_normalised_so_the_same_person_is_one_candidate():
-    assert discover.norm_url(" https://linkedin.com/in/Asha-K/?x=1 ") == discover.norm_url("http://www.linkedin.com/in/asha-k") == "https://www.linkedin.com/in/asha-k"
+    assert discover.norm_url(" https://linkedin.com/in/ACwAA-K/?x=1 ") == "https://www.linkedin.com/in/ACwAA-K"  # slug case kept: HarvestAPI profile IDs are case-sensitive
+    assert discover.url_key("https://linkedin.com/in/Asha-K/?x=1") == discover.url_key("http://www.linkedin.com/in/asha-k") == "https://www.linkedin.com/in/asha-k"
     spec = json.loads(json.dumps(SPEC)); spec["search"]["max_pages"] = 1
     def call(tool, params):
         return {"elements": [{"linkedinUrl": "https://linkedin.com/in/Asha-K/"}, {"linkedinUrl": "https://www.linkedin.com/in/asha-k"}]}, 0.05
     out = discover.discover(spec, Budget(10), call=call)
-    assert [c["linkedin_url"] for c in out["candidates"]] == ["https://www.linkedin.com/in/asha-k"]
+    assert [c["linkedin_url"] for c in out["candidates"]] == ["https://www.linkedin.com/in/Asha-K"]

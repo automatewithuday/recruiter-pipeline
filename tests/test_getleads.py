@@ -67,4 +67,4 @@ def test_count_polls_while_counting(monkeypatch):
 def test_getleads_rows_use_normalised_urls():
     post = lambda url, body, headers: {"ok": True, "contacts": [{**ROW, "linkedin_url": "http://linkedin.com/in/Asha-K/"}, ROW], "has_more": False}
     out = getleads.search(SPEC, "k", post=post)
-    assert [c["linkedin_url"] for c in out["candidates"]] == ["https://www.linkedin.com/in/asha-k"]
+    assert [c["linkedin_url"] for c in out["candidates"]] == ["https://www.linkedin.com/in/Asha-K"]

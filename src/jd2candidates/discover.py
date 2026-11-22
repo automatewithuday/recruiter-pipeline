@@ -10,10 +10,15 @@ KEYWORD_ONLY_PAGES = 4  # ponytail: without a title filter the keyword matches t
 
 
 def norm_url(url: str) -> str:
-    """One spelling per profile so HarvestAPI and GetLeads rows for the same person collapse: https, www, lower-case slug, no query or slash."""
-    u = url.strip().split("?")[0].split("#")[0].rstrip("/").lower()
-    u = re.sub(r"^https?://(www\.)?", "", u)
+    """One spelling per profile: https, www, no query or slash. Slug case is kept: HarvestAPI profile IDs (ACwAA...) are case-sensitive."""
+    u = url.strip().split("?")[0].split("#")[0].rstrip("/")
+    u = re.sub(r"^https?://(www\.)?", "", u, flags=re.I)
     return "https://www." + u
+
+
+def url_key(url: str) -> str:
+    """Case-insensitive dedupe key so HarvestAPI and GetLeads rows for the same person collapse."""
+    return norm_url(url).lower()
 
 
 def _row(el: dict, source: str) -> dict:
@@ -67,8 +72,8 @@ def discover(spec: dict, budget: Budget, call=treg.call) -> dict:
                 if not url:
                     out["skipped_no_url"] += 1
                     continue
-                if norm_url(url) not in seen:
-                    seen[norm_url(url)] = _row(el, source)
+                if url_key(url) not in seen:
+                    seen[url_key(url)] = _row(el, source)
                     new += 1
             found += new
             if new < MIN_NEW_PER_PAGE:

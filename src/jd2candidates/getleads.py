@@ -4,7 +4,7 @@ import re
 import time
 import urllib.request
 
-from .discover import norm_url
+from .discover import norm_url, url_key
 from .typesafe import HTTPStatus, urllib_post
 
 BASE = "https://app.getleads.io/api/v1/contacts/search"
@@ -65,8 +65,8 @@ def search(spec: dict, api_key: str, post=urllib_post) -> dict:
             url = c.get("linkedin_url")
             if not url:
                 out["skipped_no_url"] += 1
-            elif norm_url(url) not in seen:
-                seen.add(norm_url(url))
+            elif url_key(url) not in seen:
+                seen.add(url_key(url))
                 out["candidates"].append(_row(c))
         if resp.get("credits_exhausted"):
             out["stopped"] = "credits"
